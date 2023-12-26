@@ -80,6 +80,7 @@ DataRef("xpdr_ident", "sim/cockpit/radios/transponder_id")
 DataRef("ap_state", "sim/cockpit/autopilot/autopilot_state")
 DataRef("heading", "sim/cockpit/autopilot/heading_mag", "writable")
 DataRef( "sim_time", "sim/network/misc/network_time_sec")
+DataRef("ap_alt_hold", "sim/cockpit2/autopilot/altitude_hold_status")
 
 function ifr1_msg(str)
     IFR1_STATUS_TEXT = "IFR-1: " .. str
@@ -423,7 +424,7 @@ function ifr1_process()
     IFR1_LED_AP = ap_on > 0
     IFR1_LED_HDG = ap_lateral == 1 or ap_lateral == 14
     IFR1_LED_NAV = ap_lateral == 2 or ap_lateral == 13
-    IFR1_LED_ALT = ap_vertical == 6
+    IFR1_LED_ALT = ap_vertical == 6 or ap_alt_hold == 1
     IFR1_LED_VS = ap_vertical == 4
     IFR1_LED_APR = ap_appr > 0
 
