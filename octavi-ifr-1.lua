@@ -356,7 +356,6 @@ function ifr1_process_buttons_knobs(b0, b1, b2, k0, k1, mv)
                 end
 
                 if IFR1_BTN_VS and not IFR1_LAST_BTN_VS then
-                    ap_vs = 0
                     command_once("sim/autopilot/vertical_speed")
 
                 end
