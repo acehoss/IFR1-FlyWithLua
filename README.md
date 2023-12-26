@@ -7,7 +7,8 @@ arrived three days before Christmas, I was dismayed to find
 out that the plugins only support Windows. There was some
 mention of an Lua script that was available on request to
 support Mac and Linux, but of course it was too short notice
-to get a copy to play with over the holiday. Plus, it's weird that they don't make it available to download, even
+to get a copy to play with over the holiday. Plus, it's weird 
+that they don't make it available to download, even
 with a caveat like "this is totally unsupported, don't email
 us if you have problems".
 
@@ -30,7 +31,7 @@ write to the LEDs.
 2. Download and copy `octavi-ifr-1.lua` into FlyWithLua's `Scripts` directory.
 
 ## Usage
-Ensure your IFR-1 is plugged in before starting your flight. The IFR-1 is opened when the script loads. If the IFR-1 not plugged in when the script loads, or if it's unplugged and plugged back in, it won't work. (You can use FlyWithLua's script reload feature to re-open the device, though.)
+The script attempts to open the IFR-1 on load and periodically rechecks. It should automatically connect or reconnect if the IFR-1 is not plugged on start or if it is unplugged and replugged.
 
 On COM1, COM2, NAV1, NAV2, and AP, pressing the knob button will activate shift mode. The leds will all light up and wink to indicate shift mode. Shift mode generally makes the knob adjust the value printed in blue above the mode button, but there are some bonus hidden features.
 

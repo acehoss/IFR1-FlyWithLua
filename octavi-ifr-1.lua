@@ -49,6 +49,9 @@ IFR1_MODE_VALUE_XPDR = 7
 IFR1_LED_LAST_WRITE = 0xff
 
 IFR1_MSG_TIME = 0.0
+IFR1_OPEN_TIME = 0.0
+
+IFR1_DEVICE = nil
 
 DataRef("ap_on", "sim/cockpit2/autopilot/servos_on")
 DataRef("ap_lateral", "sim/cockpit2/autopilot/heading_mode")
@@ -84,13 +87,27 @@ function ifr1_msg(str)
     print(IFR1_STATUS_TEXT)
 end
 
-IFR1_DEVICE = hid_open(0x4d8,0xe6d6)
-if IFR1_DEVICE ~= nil then
-    hid_set_nonblocking(IFR1_DEVICE, 1)
-    hid_write(IFR1_DEVICE, 11, IFR1_LED_LAST_WRITE)
-    ifr1_msg("Connected")
-else
-    ifr1_msg("Not connected")
+function ifr1_open()
+    if IFR1_OPEN_TIME == 0.0 or IFR1_OPEN_TIME + 1.0 < sim_time then
+        local was_connected = IFR1_DEVICE ~= nil
+        if was_connected then
+            hid_close(IFR1_DEVICE)
+            IFR1_DEVICE = nil
+        end
+        IFR1_DEVICE = hid_open(0x4d8,0xe6d6)
+        if IFR1_DEVICE ~= nil then
+            hid_set_nonblocking(IFR1_DEVICE, 1)
+            hid_write(IFR1_DEVICE, 11, IFR1_LED_LAST_WRITE)
+            if not was_connected then
+                ifr1_msg("Connected")
+            end
+        else
+            if IFR1_OPEN_TIME == 0.0 or was_connected then
+                ifr1_msg("Not connected")
+            end
+        end
+        IFR1_OPEN_TIME = sim_time
+    end
 end
 
 function ifr1_pas_to_inhg(pascals)
@@ -411,9 +428,8 @@ function ifr1_process()
     IFR1_LED_VS = ap_vertical == 4
     IFR1_LED_APR = ap_appr > 0
 
-    if(IFR1_DEVICE == nil) then
-        IFR1_STATUS_TEXT = "Not found"
-    else
+    ifr1_open()
+    if IFR1_DEVICE ~= nil then
         -- read from the IFR-1. Since it is set to non-blocking, this will return with nov == 0 if there is no report available
         local nov, byte0, buttons0, buttons1, buttons2, byte5, knob0, knob1, mode_val = hid_read(IFR1_DEVICE, 8)
         if (nov == 8) then
@@ -425,6 +441,7 @@ function ifr1_process()
     end
 end
 
+ifr1_open()
 do_every_draw('ifr1_draw()')
 do_every_frame('ifr1_process()')
 
