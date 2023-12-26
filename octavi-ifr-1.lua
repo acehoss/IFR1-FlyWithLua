@@ -48,6 +48,8 @@ IFR1_MODE_VALUE_XPDR = 7
 
 IFR1_LED_LAST_WRITE = 0xff
 
+IFR1_MSG_TIME = 0.0
+
 DataRef("ap_on", "sim/cockpit2/autopilot/servos_on")
 DataRef("ap_lateral", "sim/cockpit2/autopilot/heading_mode")
 DataRef("ap_vertical", "sim/cockpit2/autopilot/altitude_mode")
@@ -74,10 +76,22 @@ DataRef("nav2_frq", "sim/cockpit2/radios/actuators/nav2_frequency_hz", "writable
 DataRef("xpdr_ident", "sim/cockpit/radios/transponder_id")
 DataRef("ap_state", "sim/cockpit/autopilot/autopilot_state")
 DataRef("heading", "sim/cockpit/autopilot/heading_mag", "writable")
+DataRef( "sim_time", "sim/network/misc/network_time_sec")
+
+function ifr1_msg(str)
+    IFR1_STATUS_TEXT = "IFR-1: " .. str
+    IFR1_MSG_TIME = sim_time
+    print(IFR1_STATUS_TEXT)
+end
 
 IFR1_DEVICE = hid_open(0x4d8,0xe6d6)
-hid_set_nonblocking(IFR1_DEVICE, 1)
-hid_write(IFR1_DEVICE, 11, IFR1_LED_LAST_WRITE)
+if IFR1_DEVICE ~= nil then
+    hid_set_nonblocking(IFR1_DEVICE, 1)
+    hid_write(IFR1_DEVICE, 11, IFR1_LED_LAST_WRITE)
+    ifr1_msg("Connected")
+else
+    ifr1_msg("Not connected")
+end
 
 function ifr1_pas_to_inhg(pascals)
     local inchesMercury = pascals * 0.0002953
@@ -87,11 +101,6 @@ end
 function ifr1_round(num, numDecimalPlaces)
     local mult = 10 ^ numDecimalPlaces
     return math.floor(num * mult + 0.5) / mult
-end
-
-function ifr1_msg(str)
-    IFR1_STATUS_TEXT = "IFR-1: " .. str
-    print(IFR1_STATUS_TEXT)
 end
 
 function ifr1_last_buttons()
@@ -371,7 +380,7 @@ function ifr1_send_leds(device)
     end
 
     if IFR1_MODE_SHIFT then
-        led_val = 0xff
+        led_val = (sim_time - math.floor(sim_time)) < 0.1 and 0 or 0xff
     end
 
     if led_val ~= IFR1_LED_LAST_WRITE then
@@ -381,7 +390,9 @@ function ifr1_send_leds(device)
 end
 
 function ifr1_draw()
-    draw_string_Helvetica_12(SCREEN_WIDTH - 700, SCREEN_HEIGHT - 50, IFR1_STATUS_TEXT)
+    if IFR1_MSG_TIME + 5.0 > sim_time then
+        draw_string_Helvetica_12(SCREEN_WIDTH - 700, SCREEN_HEIGHT - 50, IFR1_STATUS_TEXT)
+    end
 end
 
 function ifr1_ubyte_to_sbyte(usb)

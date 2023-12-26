@@ -32,7 +32,7 @@ write to the LEDs.
 ## Usage
 Ensure your IFR-1 is plugged in before starting your flight. The IFR-1 is opened when the script loads. If the IFR-1 not plugged in when the script loads, or if it's unplugged and plugged back in, it won't work. (You can use FlyWithLua's script reload feature to re-open the device, though.)
 
-On COM1, COM2, NAV1, NAV2, and AP, pressing the knob button will activate shift mode. The leds will all light up to indicate shift mode. Shift mode generally makes the knob adjust the value printed in blue above the mode button, but there are some bonus hidden features.
+On COM1, COM2, NAV1, NAV2, and AP, pressing the knob button will activate shift mode. The leds will all light up and wink to indicate shift mode. Shift mode generally makes the knob adjust the value printed in blue above the mode button, but there are some bonus hidden features.
 
 Most knobs and buttons will cause a message to be printed to the upper right part of the main display.
 
