@@ -89,7 +89,7 @@ function ifr1_msg(str)
 end
 
 function ifr1_open()
-    if IFR1_OPEN_TIME == 0.0 or IFR1_OPEN_TIME + 1.0 < sim_time then
+    if IFR1_OPEN_TIME == 0.0 or IFR1_OPEN_TIME + 5.0 < sim_time then
         local was_connected = IFR1_DEVICE ~= nil
         if was_connected then
             hid_close(IFR1_DEVICE)
@@ -397,7 +397,8 @@ function ifr1_send_leds(device)
     end
 
     if IFR1_MODE_SHIFT then
-        led_val = (sim_time - math.floor(sim_time)) < 0.1 and 0 or 0xff
+        local fraction = (sim_time - math.floor(sim_time))
+        led_val =  fraction > 0.25 and fraction <= 0.5 and 0 or 0xff
     end
 
     if led_val ~= IFR1_LED_LAST_WRITE then
