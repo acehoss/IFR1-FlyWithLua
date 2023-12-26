@@ -52,6 +52,8 @@ IFR1_MSG_TIME = 0.0
 IFR1_OPEN_TIME = 0.0
 
 IFR1_DEVICE = nil
+IFR1_DEVICE_VID = 0x4d8
+IFR1_DEVICE_PID = 0xe6d6
 
 DataRef("ap_on", "sim/cockpit2/autopilot/servos_on")
 DataRef("ap_lateral", "sim/cockpit2/autopilot/heading_mode")
@@ -88,26 +90,38 @@ function ifr1_msg(str)
     print(IFR1_STATUS_TEXT)
 end
 
+function ifr1_close()
+    if IFR1_DEVICE ~= nil then
+        hid_close(IFR1_DEVICE)
+        IFR1_DEVICE = nil
+    end
+end
+
 function ifr1_open()
-    if IFR1_OPEN_TIME == 0.0 or IFR1_OPEN_TIME + 5.0 < sim_time then
-        local was_connected = IFR1_DEVICE ~= nil
-        if was_connected then
-            hid_close(IFR1_DEVICE)
-            IFR1_DEVICE = nil
+    ALL_HID_DEVICES, NUMBER_OF_HID_DEVICES = create_HID_table()
+    local have_ifr1 = false
+    local connected = IFR1_DEVICE ~= nil
+    for i = 1, NUMBER_OF_HID_DEVICES do
+        if ALL_HID_DEVICES[i].vendor_id == IFR1_DEVICE_VID and ALL_HID_DEVICES[i].product_id == IFR1_DEVICE_PID then
+            have_ifr1 = true
+            break
         end
-        IFR1_DEVICE = hid_open(0x4d8,0xe6d6)
+    end
+
+    if connected and not have_ifr1 then
+        ifr1_msg("Disconnected")
+        ifr1_close()
+        return -- re-open on next loop to ensure init correctly
+    end
+    
+    if have_ifr1 and not connected then
+        ifr1_msg("Connecting")
+        IFR1_DEVICE = hid_open(IFR1_DEVICE_VID,IFR1_DEVICE_PID)
         if IFR1_DEVICE ~= nil then
             hid_set_nonblocking(IFR1_DEVICE, 1)
             hid_write(IFR1_DEVICE, 11, IFR1_LED_LAST_WRITE)
-            if not was_connected then
-                ifr1_msg("Connected")
-            end
-        else
-            if IFR1_OPEN_TIME == 0.0 or was_connected then
-                ifr1_msg("Not connected")
-            end
+            ifr1_msg("Connected")
         end
-        IFR1_OPEN_TIME = sim_time
     end
 end
 
@@ -442,9 +456,11 @@ function ifr1_process()
     end
 end
 
+ifr1_msg("Not connected")
 ifr1_open()
 do_every_draw('ifr1_draw()')
 do_every_frame('ifr1_process()')
+do_on_exit("ifr1_close()")
 
 -- INPUT (according to report, but read values don't match this format)
 -- 32 bits (buttons)
