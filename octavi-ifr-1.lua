@@ -197,7 +197,7 @@ function ifr1_process_buttons_knobs(b0, b1, b2, k0, k1, mv)
         end
 
         if IFR1_MODE == IFR1_MODE_VALUE_AP then
-            if IFR1_BTN_NAV and not IFR1_LAST_BTN_NAV then
+            if IFR1_BTN_APR and not IFR1_LAST_BTN_APR then
                 command_once("sim/autopilot/back_course")
             end
         end

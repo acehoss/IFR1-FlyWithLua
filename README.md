@@ -67,7 +67,7 @@ The LEDs indicate the AP status, and the bottom buttons select the AP mode. The 
 
 VS to preselected ALT can be activate by pressing ALT while holding VS (press and hold VS, then press ALT while still holding VS, then release both)
 
-In shift mode, pressing NAV/MSG will active backcourse mode.
+In shift mode, pressing APR/FPL will active backcourse mode.
 
 ### XPDR/MODE
 Adjust the transponder code. The big knob adjusts the first two digits, and the little knob the last two.
