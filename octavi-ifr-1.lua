@@ -411,8 +411,9 @@ function ifr1_send_leds(device)
     end
 
     if IFR1_MODE_SHIFT then
-        local fraction = (sim_time - math.floor(sim_time))
-        led_val =  fraction > 0.25 and fraction <= 0.5 and 0 or 0xff
+        -- local fraction = (sim_time - math.floor(sim_time))
+        -- led_val =  fraction > 0.25 and fraction <= 0.5 and 0 or 0xff
+        led_val = 0xff
     end
 
     if led_val ~= IFR1_LED_LAST_WRITE then
