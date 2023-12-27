@@ -60,8 +60,6 @@ In shift mode, adjusts the NAV2 OBS (NOTE: this is set up to adjust the _copilot
 ### FMS1, FMS2
 These are the main modes that are set up to be specific to aircraft with GNS430/530 navigators, as they use 430-specific X-Plane commands. In these modes, the bottom and right side buttons and the knobs (including clicking the knob for cursor) operate the navigators. I developed and tested the script with the default steam C172, which is what I use for instrument practice right now.
 
-I couldn't find a command for holding CLR on the navigator, so holding CLR on the IFR-1 doesn't take you back to the map. You'll have to use the mouse in the sim if you need to do that.
-
 ### AP
 The LEDs indicate the AP status, and the bottom buttons select the AP mode. The little knob adjust altitude preselect, and the big knob adjusts vertical speed target.
 

@@ -282,7 +282,9 @@ function ifr1_process_buttons_knobs(b0, b1, b2, k0, k1, mv)
             end
 
             if IFR1_BTN_CLR and not IFR1_LAST_BTN_CLR then
-                command_once(string.format("sim/GPS/g430n%d_clr", fms_no))
+                command_begin(string.format("sim/GPS/g430n%d_clr", fms_no))
+            elseif not IFR1_BTN_CLR and IFR1_LAST_BTN_CLR then
+                command_end(string.format("sim/GPS/g430n%d_clr", fms_no))
             end
 
             if IFR1_BTN_ENT and not IFR1_LAST_BTN_ENT then
