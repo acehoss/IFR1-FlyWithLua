@@ -201,12 +201,12 @@ function ifr1_process_buttons_knobs(b0, b1, b2, k0, k1, mv)
         end
 
         if IFR1_MODE == IFR1_MODE_VALUE_NAV1 then
-            nav1_obs = ifr1_round((nav1_obs + k0 * 10 + k1),0) % 360
+            nav1_obs = ifr1_round((nav1_obs - k0 * 10 - k1),0) % 360
             ifr1_msg(string.format("NAV1 OBS: %d", nav1_obs))
         end
 
         if IFR1_MODE == IFR1_MODE_VALUE_NAV2 then
-            nav2_obs = ifr1_round((nav2_obs + k0 * 10 + k1),0) % 360
+            nav2_obs = ifr1_round((nav2_obs - k0 * 10 - k1),0) % 360
             ifr1_msg(string.format("NAV2 OBS: %d", nav2_obs))
         end
 
