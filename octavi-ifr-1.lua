@@ -95,6 +95,32 @@ function ifr1_close()
         hid_close(IFR1_DEVICE)
         IFR1_DEVICE = nil
     end
+    IFR1_MODE = 0
+    IFR1_BTN_KNOB = false
+    IFR1_BTN_SWAP = false
+    IFR1_BTN_AP =   false
+    IFR1_BTN_HDG =  false
+    IFR1_BTN_NAV =  false
+    IFR1_BTN_APR =  false
+    IFR1_BTN_ALT =  false
+    IFR1_BTN_VS =   false
+    IFR1_BTN_DCT =  false
+    IFR1_BTN_MNU =  false
+    IFR1_BTN_CLR =  false
+    IFR1_BTN_ENT =  false
+    IFR1_LAST_MODE = 0
+    IFR1_LAST_BTN_KNOB = false
+    IFR1_LAST_BTN_SWAP = false
+    IFR1_LAST_BTN_AP =   false
+    IFR1_LAST_BTN_HDG =  false
+    IFR1_LAST_BTN_NAV =  false
+    IFR1_LAST_BTN_APR =  false
+    IFR1_LAST_BTN_ALT =  false
+    IFR1_LAST_BTN_VS =   false
+    IFR1_LAST_BTN_DCT =  false
+    IFR1_LAST_BTN_MNU =  false
+    IFR1_LAST_BTN_CLR =  false
+    IFR1_LAST_BTN_ENT =  false
 end
 
 function ifr1_open()
@@ -136,18 +162,18 @@ function ifr1_round(num, numDecimalPlaces)
 end
 
 function ifr1_last_buttons()
-    IFR1_BTN_KNOB = IFR1_LAST_BTN_KNOB
-    IFR1_BTN_SWAP = IFR1_LAST_BTN_SWAP
-    IFR1_BTN_AP = IFR1_LAST_BTN_AP
-    IFR1_BTN_HDG = IFR1_LAST_BTN_HDG
-    IFR1_BTN_NAV = IFR1_LAST_BTN_NAV
-    IFR1_BTN_APR = IFR1_LAST_BTN_APR
-    IFR1_BTN_ALT = IFR1_LAST_BTN_ALT
-    IFR1_BTN_VS = IFR1_LAST_BTN_VS
-    IFR1_BTN_DCT = IFR1_LAST_BTN_DCT
-    IFR1_BTN_MNU = IFR1_LAST_BTN_MNU
-    IFR1_BTN_CLR = IFR1_LAST_BTN_CLR
-    IFR1_BTN_ENT = IFR1_LAST_BTN_ENT
+    IFR1_LAST_BTN_KNOB = IFR1_BTN_KNOB
+    IFR1_LAST_BTN_SWAP = IFR1_BTN_SWAP
+    IFR1_LAST_BTN_AP = IFR1_BTN_AP
+    IFR1_LAST_BTN_HDG = IFR1_BTN_HDG
+    IFR1_LAST_BTN_NAV = IFR1_BTN_NAV
+    IFR1_LAST_BTN_APR = IFR1_BTN_APR
+    IFR1_LAST_BTN_ALT = IFR1_BTN_ALT
+    IFR1_LAST_BTN_VS = IFR1_BTN_VS
+    IFR1_LAST_BTN_DCT = IFR1_BTN_DCT
+    IFR1_LAST_BTN_MNU = IFR1_BTN_MNU
+    IFR1_LAST_BTN_CLR = IFR1_BTN_CLR
+    IFR1_LAST_BTN_ENT = IFR1_BTN_ENT
     IFR1_LAST_MODE = IFR1_MODE
 end
 
