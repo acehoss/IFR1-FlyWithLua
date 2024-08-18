@@ -16,16 +16,6 @@ So I got a bonus project for the holiday, and I got to work
 figuring out how to write Lua, how to read and write USB HID
 data, and how the IFR-1 works under the hood.
 
-I am an accomplished software engineer in other languages,
-but Lua is new to me and I don't really know Lua development
-conventions. I didn't spend a lot of time making the script
-beautiful or clean. My priority was to get the device usable
-so I could do some flying. So if you look at it and think
-it's crap, it is. *But* it does work, and you can use it as
-a starting point for something better. The key thing is that
-it shows how to read the button and knob values, and how to
-write to the LEDs.
-
 ## Install
 1. Install [FlyWithLua](https://forums.x-plane.org/index.php?/files/file/38445-flywithlua-ng-next-generation-edition-for-x-plane-11-win-lin-mac/)
 2. Download and copy `octavi-ifr-1.lua` into FlyWithLua's `Scripts` directory.

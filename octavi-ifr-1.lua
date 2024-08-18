@@ -243,7 +243,7 @@ function ifr1_process_buttons_knobs(b0, b1, b2, k0, k1, mv)
         end
     else -- normal (not shift) mode
         if IFR1_MODE <= IFR1_MODE_VALUE_NAV2 then
-            local freq_div = 5.0
+            local freq_div = 2.5
             local freq = IFR1_MODE == IFR1_MODE_VALUE_COM1 and com1_sby or IFR1_MODE == IFR1_MODE_VALUE_COM2 and com2_sby or IFR1_MODE == IFR1_MODE_VALUE_NAV1 and nav1_sby or IFR1_MODE == IFR1_MODE_VALUE_NAV2 and nav2_sby or 0
             local khz = math.floor((freq % 100 + k1 * freq_div + freq_div/2)/freq_div)*freq_div  % 100
             local mhz = math.floor(freq/100) + k0
